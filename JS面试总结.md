@@ -912,67 +912,149 @@ inherit: 规定应该从父元素继承 position 属性的值。
 
 采用transform: scale()的方式
 
-#### transition和animation的区别
+#### Transition和Animation的区别
 
-animation和transition大部分属性是相同的，他们都是随时间改变元素的属性值，主要区别是：
+**Animation的案例：**
+
+css
+
+```css
+#myDIV {
+    width:300px;
+    height:200px;
+    background:red;
+    animation: mymove 5s infinite;
+}
+@keyframes mymove {
+    from {background-color:red;}
+    to {background-color:blue;}
+}
+ keyframes也可以使用百分比：
+@keyframes mymove
+{
+    0%   {background: red; left:0px; top:0px;}
+    25%  {background: yellow; left:200px; top:0px;}
+    50%  {background: blue; left:200px; top:200px;}
+    75%  {background: green; left:0px; top:200px;}
+    100% {background: red; left:0px; top:0px;}
+}
+```
+
+html
+
+```html
+<div id="myDIV"></div>
+```
+
+| 属性                                                         | 描述                                                         | CSS  |
+| :----------------------------------------------------------- | :----------------------------------------------------------- | :--- |
+| [@keyframes](https://www.runoob.com/cssref/css3-pr-animation-keyframes.html) | 规定动画。                                                   | 3    |
+| [animation](https://www.runoob.com/cssref/css3-pr-animation.html) | 所有动画属性的简写属性。                                     | 3    |
+| [animation-name](https://www.runoob.com/cssref/css3-pr-animation-name.html) | 规定 @keyframes 动画的名称。                                 | 3    |
+| [animation-duration](https://www.runoob.com/cssref/css3-pr-animation-duration.html) | 规定动画完成一个周期所花费的秒或毫秒。默认是 0。             | 3    |
+| [animation-timing-function](https://www.runoob.com/cssref/css3-pr-animation-timing-function.html) | 规定动画的速度曲线。默认是 "ease"。                          | 3    |
+| [animation-fill-mode](https://www.runoob.com/cssref/css3-pr-animation-fill-mode.html) | 规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。 | 3    |
+| [animation-delay](https://www.runoob.com/cssref/css3-pr-animation-delay.html) | 规定动画何时开始。默认是 0。                                 | 3    |
+| [animation-iteration-count](https://www.runoob.com/cssref/css3-pr-animation-iteration-count.html) | 规定动画被播放的次数。默认是 1。                             | 3    |
+| [animation-direction](https://www.runoob.com/cssref/css3-pr-animation-direction.html) | 规定动画是否在下一周期逆向地播放。默认是 "normal"。          | 3    |
+| [animation-play-state](https://www.runoob.com/cssref/css3-pr-animation-play-state.html) | 规定动画是否正在运行或暂停。默认是 "running"。               | 3    |
+
+**Transition的例子**
+
+```css
+div {
+    width: 100px;
+    height: 100px;
+    background: red;
+    transition: width 2s, height 2s, transform 2s;
+}
+
+div:hover {
+    width: 200px;
+    height: 200px;
+    transform: rotate(180deg);
+}
+```
+
+```html
+<div>鼠标移动到 div 元素上，查看过渡效果。</div>
+```
+
+要实现这一点，必须规定两项内容：
+
+- 指定要添加效果的CSS属性
+- 指定效果的持续时间。
+
+要添加多个样式的变换效果，添加的属性由逗号分隔：
+
+```css
+div
+{
+    transition: width 2s, height 2s, transform 2s;
+}
+```
+
+| 属性                                                         | 描述                                         | CSS  |
+| :----------------------------------------------------------- | :------------------------------------------- | :--- |
+| [transition](https://www.runoob.com/cssref/css3-pr-transition.html) | 简写属性，用于在一个属性中设置四个过渡属性。 | 3    |
+| [transition-property](https://www.runoob.com/cssref/css3-pr-transition-property.html) | 规定应用过渡的 CSS 属性的名称。              | 3    |
+| [transition-duration](https://www.runoob.com/cssref/css3-pr-transition-duration.html) | 定义过渡效果花费的时间。默认是 0。           | 3    |
+| [transition-timing-function](https://www.runoob.com/cssref/css3-pr-transition-timing-function.html) | 规定过渡效果的时间曲线。默认是 "ease"。      | 3    |
+| [transition-delay](https://www.runoob.com/cssref/css3-pr-transition-delay.html) | 规定过渡效果何时开始。默认是 0。             | 3    |
+
+Animation和Transition大部分属性是相同的，他们都是随时间改变元素的属性值，主要区别是：
 
 
-1. Transition 强调过渡; Animation 强调流程与控制 。
+1. Transition 强调过渡; Animation 强调流程与控制，在css3中称作动画 。
 
 
 2. 两者的控制粒度不一样
-   1. 某种程度上, transition 更加粗一点, 比如过渡的速度进行了封装, 可以控制是匀速改变还是贝塞尔曲线之类的。
-   2. animation 提供的 keyframe 方法, 可以让你手动去指定每个阶段的属性; 此外 animation 还封装了循环次数, 动画延迟等功能, 更加自由和强大。
+   1. 某种程度上, Transition 更加粗一点, 比如过渡的速度进行了封装, 可以控制是匀速改变还是贝塞尔曲线之类的。
+   2. Animation 提供的 keyframe 方法, 可以让你手动去指定每个阶段的属性; 此外 Animation 还封装了循环次数, 动画延迟等功能, 更加自由和强大。
 
 3. 动画状态: 
-   1. CSS的 transition 只有两个状态:开始状态 和 结束状态 。
+   1. CSS的 Transition 只有两个状态:开始状态 和 结束状态 。
    2. animation 可能是多个状态, 有帧的概念 。
 
 4. 动画触发方式:
    1. CSS的transition需要借助别的方式来触发, 比如CSS的状态选择器（如:hover）或 借助JavaScript来触发 。
-   2. animation 不但可以使用上面的方式触发, 更重要的是可以自动触发 。
+   2. Animation 不但可以使用上面的方式触发, 更重要的是可以自动触发 。
 
-5. animation 控制动效上要比 transition 强，因为它具备一些控制动效的属性，比如“播放次数”、“播放方向”、“播放状态”等。
+5. Animation 控制动效上要比 Transition 强，因为它具备一些控制动效的属性，比如“播放次数”、“播放方向”、“播放状态”等。
 
 6. 动画实现的范围:
-   1. transition 是有一定限制的, 并不是所有 CSS 的属性都具有过渡效果 。
-   2. 另外相比而言, CSS 的 animation 要比 transition 强大的多, 几乎所有的 css 属性都可以实现动画效果。
-   3. 这也是为什么使用 animation 制作 Web 动画的场景更多 。
+   1. Transition 是有一定限制的, 并不是所有 CSS 的属性都具有过渡效果 。
+   2. 另外相比而言, CSS 的 Animation 要比 Transition 强大的多, 几乎所有的 css 属性都可以实现动画效果。
+   3. 这也是为什么使用 Animation 制作 Web 动画的场景更多 。
 
 7. 动画实现方式
-   1. CSS 的 animation 是离不开 @keyframes 的，换句话说，我们需要先使用 @keyframes 来注册一个动画效果，即帧来描述动画效果。当然，只注册也不见得有效果，还是需要使用 animation-name 属性引用 @keyframes 注册好的动画效果。
+   1. CSS 的 Animation 是离不开 @keyframes 的，换句话说，我们需要先使用 @keyframes 来注册一个动画效果，即帧来描述动画效果。当然，只注册也不见得有效果，还是需要使用 animation-name 属性引用 @keyframes 注册好的动画效果。
 
 
 "注意": CSS transform 也是用来制作动效的，这个说法有点偏颇，CSS transform 只不过提供了一些函数，可以做不同的变换，这些函数运用于 CSS 的 transition 或 @keyframes 中能得到一些不同的效果，特别是配上时间，缓动函数之类的，效果会更佳。因此也被识认为是动效中不可或缺。其实在 animation 中，可以发挥你的想象，使用 CSS 中任意属性，实现一些有创意的动效。
 
 #### Flex布局
 
-#### JS动画和css3动画的差异性
+#### 浮动清除的方法
 
-渲染线程分为 main thread 和 compositor thread，如果 css 动画只改变 transform 和 opacity， 这时整个 CSS 动画得以在 compositor trhead 完成（而 JS 动画则会在 main thread 执行，然 后出发 compositor thread 进行下一步操作），特别注意的是如果改变 transform 和 opacity 是不会 layout 或者 paint 的。 
+浮动案例
 
-区别： 
-
-功能涵盖面，JS 比 CSS 大 
-
-实现/重构难度不一，CSS3 比 JS 更加简单，性能跳优方向固定 
-
-对帧速表现不好的低版本浏览器，css3 可以做到自然降级 
-
-css 动画有天然事件支持 
-
-css3 有兼容性问题
-
-#### 多行元素的文本省略
-
-```css
-display: -webkit-box 
--webkit-box-orient:vertical 
--webkit-line-clamp:3 
-overflow:hidden
+```html
+<div id="box"><div id="son"></div></div>
 ```
 
-#### 浮动清除的方法
+```css
+#box {
+    width: 100px;
+    background: red;
+}
+#son {
+    width: 50px;
+    height: 50px;
+    background: blue;
+    float:left;
+}
+```
 
 一、使用一个空元素
 
@@ -990,17 +1072,27 @@ overflow:hidden
 
 二、使用css的overflow属性
 
-给浮动元素的容器添加 overflow:hidden;或 overflow:auto;可以清除浮动，浮动元素又回到了容器层，把容器高度撑起，达到了清理浮动 的效果
+给浮动元素的父容器添加 overflow:hidden;或 overflow:auto;可以清除浮动，浮动元素又回到了容器层，把容器高度撑起，达到了清理浮动 的效果
 
-三、给浮动的元素的容器添加浮动
+```css
+#box {
+    overflow:auto;
+    // 或者
+    overflow:hidden;
+}
+```
 
-给浮动元素的容器也添加上浮动属性即可清除内部浮动，但是这样会使其整体浮动，影 响布局，不推荐使用
+三、使用 CSS 的:after 伪元素 
 
-四、使用 CSS 的:after 伪元素 
+结合:after 伪元素（代表一个元素之后最近的元素） ，可以完美兼容当前主流的各大浏览器给浮动元素的容器添加一个 clearfix 的 class，然后给这个 class 添加一个:after 伪元素实 现元素末尾添加一个看不见的块元素（Block element）清理浮动
 
-结合:after 伪元素（代表一个元素之后最近的元素）和 IEhack ，可以完美兼容当前主流的各大浏览器
-
-给浮动元素的容器添加一个 clearfix 的 class，然后给这个 class 添加一个:after 伪元素实 现元素末尾添加一个看不见的块元素（Block element）清理浮动
+```css
+#box:after {
+    content:'';
+    clear:both;
+    display:block;
+}
+```
 
 #### Css3的新特性
 
@@ -1011,8 +1103,6 @@ overflow:hidden
 - word-wrap
 
 Css2D、3D转换、过渡
-
-CSS3多列
 
 CSS3多列：
 
@@ -1044,34 +1134,60 @@ text-overflow 属性，值为 clip 是修剪文本；ellipsis 为显示省略符
 
 string 为使用给定的字符串来代表被修剪的文本。
 
+溢出省略的方法：
+
+必须指定宽度，块和行内块元素
+
+```css
+overflow: hidden;
+text-overflow: ellipsis;
+-webkit-box-orient: vertical;
+white-space: nowrap;
+```
+
 #### float 的元素，display 是什么
 
 display 为 block
+
+
 
 所用浏览器测试，浏览器的内核
 Crome    Blink(基于webkit,Goole与Opera 共同开发)
 Opera	旧：presto 新：Blink
 Firefox	gecko
-Doctype作用？
+
+#### Doctype作用
+
 在整个文档的最前面，告诉浏览器按照何种规范解析器页面
-div+css的布局较table布局有什么优点?
+
+#### div+css的布局较table布局有什么优点?
+
 优点：改版的时候方便，只需要改变css文件，表现与结构分离
 页面加载速度更快，结构清晰话，页面显示简介
-img的alt与tile的区别？strong与em的异同？
+
+#### img的alt与tile的区别？strong与em的异同？
+
 alt:当图片加载不出来的时候显示alt的属性值
 title:当鼠标悬停上去显示的文字，提供建议性的信息
 strong:对文字进行加粗处理，表示内容的重要性
 em：对文字进行斜体强调标签，表示内容的强调点
-cookies,sessionStrong和localSreong的区别？
+
+#### cookies,sessionStrong和localSreong的区别？
+
 sessionStrong：会话级别的存储，当会话结束后，数据也随之销毁，不是一种持久化的本地存储，是一种更大容量存储设计。
 localStrong用于持久化的本地存储，只有主动删除数据，否则数据永远不会过期
 Coolie的大小是受限制的，每次请求新页面的时候Cookie都会被发送过去，增加带宽，还需要指定作用域，不可以跨域调用。
-src与href的区别？
+
+#### src与href的区别？
+
 src:替换当前元素，指向外部资源的位置，指向的内容将会嵌入带文档中当前标签所在的位置，在请求src资源时会将资源下载并应用到文档内，如js脚本,img图片和frame等元素，当浏览器解析到该元素时，会暂停其他资源的下载和处理，直到该资源加载、编译、执行完毕
+
 <script src =”js.js”></script>
 href:指向网络资源所在的位置，建立和当前元素或当前文档之间的链接
-<link href=”common.css” rel=”stylesheet”/>
-从用户刷新网页开始，一次js请求一般情况下有哪些地方会有缓存处理？
+<link href="common.css" rel="stylesheet"/>
+
+#### 从用户刷新网页开始，一次js请求一般情况下有哪些地方会有缓存处理？
+
 dns缓存、cdn缓存、浏览器缓存、服务器缓存。
 网页上有大量的图片，有哪些方法优化这些图片的加载，给用户良好的体验？
 图片懒加载，在页面上未可视区域添加滚动事件，判断图片位置与浏览器顶端的距离与页面的距离，如果前者小于后者，优先加载，
@@ -1079,160 +1195,224 @@ dns缓存、cdn缓存、浏览器缓存、服务器缓存。
 如果为css图片，可以使用Iconfont、Base64等技术
 图片过大，可以使用特殊编码的图片，加载时会先加载一张压缩特别厉害的缩略图，提高用户体验
 
-有哪些方式可以对一个DOM设置它的CSS样式？
+#### 有哪些方式可以对一个DOM设置它的CSS样式？
+
 外部样式表，引入一个外部css文件
 内部样式表：将css代码放在<head>标签内部
 内联样式，直接将样式的定义在html元素内部
-CSS都有哪些选择器：
+
+#### CSS都有哪些选择器
+
 派生选择器（HTML的标签声明）
 id选择器（DOM的id声明）
 类选择器（用一样式类声明）
 属性选择器（DOM属性声明，）
-包括，后代（利用空格间隔）、群组（逗号间隔）
+后代（利用空格间隔）、群组（逗号间隔）
 CSS选择器的优先级基本原则：
 选择器越特殊，优先级越高，
 复杂的计算：1表示派生选择器的优先级，10表示类选择器的优先级、100表示ID选择器的优先级
 当优先级相同时，与样式的先后顺序有关，用一选择器后面的样式会覆盖前面的，<p class=’classB classA’>中的先后关系无关。
-CSS中可以通过哪些属性定义，使得一个DOM元素不显示在浏览器的可视范围内？
+
+#### CSS隐藏DOM元素？
+
 最基本:
 设置：visibility:hiddlen或者display:none
 技巧性：
 设置宽高为0，设置透明度为0 设置z-index位置在-1000
-超链接访问过后hover样式就不出现的问题是什么？如何解决？
+
+#### 超链接访问过后hover样式就不出现的问题是什么？如何解决？
+
 被点击访问过的超链接不在具有hover和active，解决方法是改变CSS属性的排列顺序：L-V-H-A(link,visited,hover,active)
-使用CSS写一个简单的幻灯片效果页面
+
+#### 使用CSS写一个简单的幻灯片效果页面
+
 要用CSS3，使用animation动画实现一个简单的幻灯片效果?
 CSS样式：
-<style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: 微软雅黑;
-      list-style: none;
-    }
-    #box{
-        width:400px;
-        height:200px;
-        border: 1px solid #000;
-        margin: 50px auto;
-        overflow: hidden;
-    }
-    ul{
-      width: 2000px;
-      animation: dh 10s infinite  linear;
-    }
-    ul li{
-      width:400px;
-      height:200px;
-      float: left;
 
-    }
-    ul li:nth-child(1){
-      background:#4b86db;
-    }
-    ul li:nth-child(2){
-      background:#ff9999;
-    }
-    ul li:nth-child(3){
-      background:olivedrab;
-    }
-    ul li:nth-child(4){
-      background:skyblue;
-    }
-    ul li:nth-child(5){
-      background:#4b86db;
-    }
-@keyframes dh {
-      0%{transform: translateX(0)}
-      25%{transform: translateX(-400px)}
-      50%{transform: translateX(-800px)}
-      75%{transform: translateX(-1200px)}
-      100%{transform: translateX(-1600px)}
+
+```css
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 微软雅黑;
+    list-style: none;
 }
-  </style>
-
-	</style>
+#box{
+    width:400px;
+    height:200px;
+    border: 1px solid #000;
+    margin: 50px auto;
+    overflow: hidden;
+}
+ul{
+    width: 2000px;
+    animation: dh 10s infinite  linear;
+}
+ul li{
+    width:400px;
+    height:200px;
+    float: left;
+}
+ul li:nth-child(1){
+    background:#4b86db;
+}
+ul li:nth-child(2){
+    background:#ff9999;
+}
+ul li:nth-child(3){
+    background:olivedrab;
+}
+ul li:nth-child(4){
+    background:skyblue;
+}
+ul li:nth-child(5){
+    background:#4b86db;
+}
+@keyframes dh {
+    0%{transform: translateX(0)}
+    25%{transform: translateX(-400px)}
+    50%{transform: translateX(-800px)}
+    75%{transform: translateX(-1200px)}
+    100%{transform: translateX(-1600px)}
+}
+```
 html:
-	<section id=box>
-  <ul>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>1</li>
-  </ul>
+
+```html
+<section id=box>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>1</li>
+    </ul>
 </section>
-查代码：
-行内元素和块级元素的区别？行内元素的padding和margin可以设置吗？
+```
+
+
+#### 行内元素和块级元素的区别？行内元素的padding和margin可以设置吗？
+
 块元素：
 总是独占一行,表现为另起一行开始，后面的元素也必须另起一行显示；
 宽度(width)，高度(height)，内边距(padding)，外边距（margin）都可控制；
 内联元素：
-和相邻的元素在同一行：宽度(width)、高度(height)、内边距的top/bottom(padding-top/padding-bottom)和外边距的top/bottom(margin-top/margin-bottom)都不可改变（也就是padding 和margin 的left 和right 是可以设置的），就是里面文字或图片的大小。浏览器还有默认的天生inline-block 元素（拥有内在尺寸，可设置高宽，
-但不会自动换行），有哪些？
-答案：<input> 、<img> 、<button> 、<texterea> 、<label>。
-什么是外边距重叠？
+和相邻的内联元素在同一行：宽度(width)、高度(height)、内边距的top/bottom(padding-top/padding-bottom)和外边距的top/bottom(margin-top/margin-bottom)都不可改变（也就是padding 和margin 的left 和right 是可以设置的），就是里面文字或图片的大小。
+
+浏览器还有默认的天生inline-block 元素（拥有内在尺寸，可设置高宽，但不会自动换行），有哪些？
+
+```html
+<input> 、<img> 、<button> 、<texterea> 、<label>
+```
+
+#### 什么是外边距重叠
+
 相邻的两个盒子的外边距可以结合成一个单独的外边距，这种合并外边距的方式成为折叠
 折叠结果遵循下列计算规则：
 两个相邻的外边距都是正数，折叠结果是他们两者之间较大的值。
 两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值
 两个外边距一正一负时，折叠结果是两者的相加的和
-rgba()和opacity的透明效果有什么不同？
+
+#### rgba()和opacity的透明效果有什么不同
+
 rgba()和opacity都能实现透明效果，
 不同：opacity作用于元素，以及元素内的所有内容的透明度
-rgba()只作用与元素的颜色或它的背景色（设置rgba 透明的元素的子元素不会继承透明
-效果！）
-CSS中可以让文字在垂直和水平方向上重叠的两个属性是什么？
+rgba()只作用与元素的颜色或它的背景色（设置rgba 透明的元素的子元素不会继承透明效果！）
+
+#### CSS中可以让文字在垂直和水平方向上重叠的两个属性是什么
+
 垂直方向：line-height
 水平方向：letter-spacing(可以用于消除inline-block元素间的换行符空格间隙问题)
-如何垂直居中一个浮动的元素？
 
-方法一:已知父盒子的高度
- 父{
-width: 150px;
-              height: 150px;
-              background-color: teal;
-              position: relative; /*注意父盒子要相对定位*/}
+#### 如何垂直居中一个浮动的元素
+
+方法一：已知父盒子的高度
+
+ ```css
+父{
+    width: 150px;
+    height: 150px;
+    background-color: teal;
+    position: relative; /*注意父盒子要相对定位*/}
 }
 #div{
-	background-color:#6699FF;
-	width:200px;
-height:200px;
-position:absolute;
-top:50%;
-left:50%；
-margin-top:-100px;
-margin-left:-100px;
-
+    background-color:#6699FF;
+    width:200px;
+    height:200px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-100px;
+    margin-left:-100px;
 }
+ ```
+
 方法二：未知父盒子的高度
+
+```css
 父{
- position: relative;        
-background-color: teal;      
+    position: relative;        
+    background-color: teal;      
 }
 子{
-width:50px;
-height:50px;
-background-color:red;
-float:left;
-margin:auto;
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
+    width:50px;
+    height:50px;
+    background-color:red;
+    float:left;
+    margin:auto;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
 }
-垂直居中一个<img>?
+```
+
+#### 垂直居中一个img
+
+```css
 #content{
-display:table-cell;
-text-align:center;
-vertical-align:middle;
+    display:table-cell;
+    text-align:center;
+    vertical-align:middle;
 }
-px和em的区别？
+```
+
+#### px和em的区别
+
 px em 都是长度单位，px是固定的值，指定多少就是多少
 em值不固定，并且em会继承父级元素的字体大小。
 浏览器的字体高度是16px;所以有1em=16px 若12px=0.75em,10px=0.625em
-sass、less是什么？为什么要使用他们？
+
+#### 字母设置大小写
+
+```css
+p.uppercase {text-transform:uppercase;} 全部大写
+p.lowercase {text-transform:lowercase;} 全部小写
+p.capitalize {text-transform:capitalize;}  首字母大写
+```
+
+#### 文本处理
+
+````css
+text-indent：文本缩进
+word-spacing	设置字间距  字符之间的间距
+letter-spacing	设置字符间距   单词与单词之间的间距
+white-space:nowrap;是否在一行换行不换行
+````
+
+#### 2d、3d的转换
+
+translate()   移动   根据左(X轴)和顶部(Y轴)位置给定的参数，从当前元素位置移动
+rotate(30deg)  旋转    在一个给定度数顺时针旋转的元素。负值是允许的，这样是元素逆时针旋转
+scale()  缩放   该元素增加或减少的大小，取决于宽度（X轴）和高度（Y轴）的参数   参数一为宽度，参数二为长度
+skew()   倾斜   别表示X轴和Y轴倾斜的角度，如果第二个参数为空，则默认为0，参数为负表示向相反方向倾斜
+matrix()  matrix()方法和2D变换方法合并成一个。matrix 方法有六个参数，包含旋转，缩放，移动（平移）和倾斜功能。
+box-sizing: border-box: 高度和宽度应用于元素的所有部分: 内容、内边距和边框:
+box-sizing: content-box (默认): 高度和宽度只应用于元素的内容:
+
+#### sass、less是什么？为什么要使用他们
+
 他们是CSS预处理器，是CSS上的一种抽象层，他们是一种特殊的语法/语言编译成CSS，
 例如；Less是一种动态样式语言，将CSS赋予了动态语言的特性，如变量，继承，运算，函数，LESS可以在客户端运行，也可以在服务的运行（node.js）
 为什么使用他们?
@@ -1241,73 +1421,93 @@ sass、less是什么？为什么要使用他们？
 减少无意义的机械劳动
 可以轻松实现多重继承
 完全兼容CSS代码可以方便的应用到老项目中，LESS只是在CSS语法上做了扩展，所以老的CSS代码也可以与LESS代码一同编译
-display:none与visibility:hidden的区别是什么？
+
+#### display:none与visibility:hidden的区别是什么
+
 display:none，隐藏对应的元素但不挤占元素原来的空间。html对象的宽高各种属性值都将丢失，
 visibility:hidden隐藏对应的元素并且挤占元素原来的空间
-CSS中的link和@import的区别是：
+
+#### CSS中的link和@import的区别是
+
 Link属于html标签，而@import是CSS提供的
 在页面加载的时候，link会同时被加载，而@import引用的CSS会在页面加载完成后才会加载引用的CSS
 @import只有在ie5以上才可以被识别，而link是html标签，不存在浏览器兼容性问题
 Link引入样式的权重大于@import的引用
-简介盒子模型：
+
+#### 简介盒子模型
+
 两种：IE和模型，标准的W3C盒子模型
 盒子模型：内容、内边距、外边距（一般不计入盒子实际宽度）、边框
 为什么要初始化样式？
 由于浏览器的兼容问题，不同的浏览器对标签的默认样式值不同，若不初始化会造成不同浏览器之间的显示差异
 但是初始化CSS会对搜索引擎优化造成小影响
-BFC是什么？
+
+#### BFC是什么
+
 BFC（块级格式化上下文），一个创建了新的BFC的盒子是独立布局的，盒子内元素的布局不会影响盒子外面的元素。在同一个BFC中的两个相邻的盒子在垂直方向发生margin重叠问题
 BFC是指浏览器中创建了一个独立的渲染区域，该区域内所有元素的布局不会影响到区域外元素的布局，这个渲染区域只对块级元素起作用
-html语义化是什么？当页面加载失败的时候能够让页面呈现出清晰的结构
-有利于seo优化，利于被搜索引擎收录
+
+#### html语义化是什么
+
+当页面加载失败的时候能够让页面呈现出清晰的结构有利于seo优化，利于被搜索引擎收录
 便于项目的开发及维护，使html代码更具有可读性，便于其他设备解析
 严格模式与混杂模式的区别？
 严格模式下：页面排版及JS解析是以浏览器支持的最高标准来执行
 混杂模式：不严格按照标准执行，主要用来兼容旧的浏览器，向后兼容
-CSS的和模型由什么组成？
+
+#### CSS的和模型由什么组成
+
 border,margin,padding
 display属性有哪些？
 display:block行内元素转为块级元素
 display:inline块级元素转为行内元素
 display:inline-block转为内联元素
-CSS属性哪些可以继承？
+
+#### CSS属性哪些可以继承
+
 可继承：font-size font-family color ul li dl dd dt
 不可继承：border padding margin width height
-CSS优先级算法如何计算？
-!important>id>class>标签
 
-!important比内联优先级高
+#### CSS优先级算法如何计算
+
+!important>id>class>标签；!important比内联优先级高
 *优先级就近原则，样式定义最近者为准
 *以最后载入的样式为准
-text-align:center和line-height有什么区别？
+
+#### text-align:center和line-height有什么区别
+
 text-align：是水平对齐line-height是行间
-写一个表格以及对应的CSS，使表格奇数行为白色背景，偶数行为灰色，鼠标移上去为黄色背景
-JS基础
-jsvascript的typeof返回哪些数据类型？
+
+#### 写一个表格以及对应的CSS，使表格奇数行为白色背景，偶数行为灰色，鼠标移上去为黄色背景
+
+### JS基础
+
+#### jsvascript的typeof返回哪些数据类型
+
 object number undefined function boolean string
-列举3种强制类型转换和2种隐式类型转换？
+
+#### 列举3种强制类型转换和2种隐式类型转换
+
 parseInt parseFloat number()
 "=="
-split()join()的区别
+
+#### split()join()的区别
+
 split()的作用是将字符串类型切割为字符串数组
 join()的作用是将字符数组转换为字符串
-数组方法pop() push() unshit() shit()本别指什么？
+
+#### 数组方法pop() push() unshit() shit()本别指什么
+
 pop()是在末尾删除一个字符
 push()是在末尾添加一个字符
 unshit()是在头部删除一个字符
 shit()是在头部添加一个字符
-事件绑定和普通绑定由什么区别？
 
-IE喝DOM事件流的区别？
-1、执行顺序不一样
-2、参数不一样
-3、事件加不加on
-4、this指向问题
-IE和标准下有哪些兼容性的写法？
-var ev=ev||window.event
-document.documentElement.ClientWidth||document.body.clientWidth
-var target=ev.srcElement||ev.target
-call()和apply的区别
+#### 事件绑定和普通绑定由什么区别
+
+
+#### call()和apply的区别
+
 call和apply相同点：
 都是为了用一个本不属于一个对象的方法
 javascript指针、闭包、作用域
@@ -1355,7 +1555,8 @@ const 声明一个只读常量，一旦声明，常量的值就不会改变，
 const命令跟let命令一样不存在变量提升、具有块级作用域、存在暂时性死区。
 const 命令实际上保证的并不是变量的值不得改动，而是变量指向的那个内存地址不得改动。
 
-javascript的同源策略
+#### javascript的同源策略
+
 一段脚本只能读取来自于同一来源的窗口和文档的属性，这里的同一来源指的是主机名、协议和端口号的组合
 http,ftp:协议
 主机名：localhost
@@ -1364,34 +1565,40 @@ http,ftp:协议
 https:默认端口是8083
 同域名下的请求无法实现，如果说想要请求其他来源的js文件，或者json数据，那么可以同
 
+#### 随机产生10-100之间的数并排序
 
+```js
+var arr=[];
+//arr 定义循环内部与外部的区别，定义内部则一直被重新定义，数组中的数据一直被清除，长度为一直为0
+function cone(start,end){
+    var icone=end-start;	
+    return Math.floor(Math.random()*icone+start);//随机产生10-100之间的数字
+}
 
-随机产生10-100之间的数并排序
-var arr=[];//arr 定义循环内部与外部的区别，定义内部则一直被重新定义，数组中的数据一直被清除，长度为一直为0
-		function cone(start,end){
-			var icone=end-start;
+for(var i=0;i<10;i++){
+    var arr2=cone(10,100);
+    arr.push(arr2)
+}
+arr.sort();
+document.write(`排序后的数组：${arr}`)
+```
+#### 把两个数组合并，并删除第二个元素
 
-			return Math.floor(Math.random()*icone+start);//随机产生10-100之间的数字
-		}
-	
-		for(var i=0;i<10;i++){
-				var arr2=cone(10,100);
-				arr.push(arr2)
-			}
-			arr.sort();
-			document.write(`排序后的数组：${arr}`)
-把两个数组合并，并删除第二个元素
+```js
 var arr=['a','b','c','d'];
-		var arr1=[1,2,3,4,5];
-		var arr3=arr.concat(arr1);
-		arr3.splice(1,1);//返回删除后的数组
-		document.write(`${arr3}`)
-怎样添加，移除，移动，赋值，创建和查找节点
+var arr1=[1,2,3,4,5];
+var arr3=arr.concat(arr1);
+arr3.splice(1,1);//返回删除后的数组
+document.write(`${arr3}`)
+```
+
+#### 怎样添加，移除，移动，赋值，创建和查找节点
+
 (1)创建节点
 createDocumentFragment()//dom片段
 createElement()//创建一个具体元素
 createTextNode()//创建一个文本节点
-(2)
+(2)添加，移除，替换，插入
 appendChild()
 removeChild()
 replaceChild()
@@ -1400,110 +1607,121 @@ insertChild()
 getElementById();
 getElementsByTagName();
 getElementsByClass();
-以下代码输出4，4，4
+querySelector('#id');
+querySelectorAll('#id')
+
+#### 解释以下代码输出4，4，4
+
+```js
 for(var i=1;i<=3;i++){
-	
-setTimeout((function(){
-console.log();
-}),0);
+    setTimeout((function(){
+        console.log(i);
+    }),0);
 };
+```
 
 Javascript 事件处理器在线程空闲之前不会运行
 以下代码输出1，2，3
-for(var i=1;i<=3;i++){
-	
-setTimeout((function(i){
-console.log(i);
-})(i),0);
-};
 
-///////////////用函数写一个清除空格的函数；
+```js
+for(var i=1;i<=3;i++){
+    setTimeout((function(i){
+        console.log(i);
+    })(i),0);
+};
+```
+
+
+
+#### 用函数写一个清除空格的函数
 
 用正则表达式，或者使用trim()函数清除字符串存在的空格
-字符串反转："12345678"=>"87654321"
+
+#### 字符串反转："12345678"=>"87654321"
+
+```js
 var str="12345678";
 var  str1=str.split("");
 str=str1.reverse().join("");
-将数字12345678转化为RMB形式 如：12,345,678;
+```
+
+#### 将数字12345678转化为RMB形式 如：12,345,678;
 
 
-
-
-		var num=12345678
-		var str=num+"";
-		function rever(str){
-			return str=str.split("").reverse().join("");
-		}
+```js
+var num=12345678
+var str=num+"";
+function rever(str){
+    return str=str.split("").reverse().join("");
+}
 str=rever(str)
 var result="";
 for(var i=1;i<=str.length;i++){
-result=result+str[i-1];
-	if(i%3==0&&i!=str.length){
-		result+=",";
-	}
-
+    result=result+str[i-1];
+    if(i%3==0&&i!=str.length){
+        result+=",";
+    }
 }
 result=rever(result);
 document.write(`${result}`)
-
+```
 数字>字符串>反转函数>新字符串>传值>判断有三个数字时+,>当长度不为str长度时循环结束
-去掉数组中重复的数字：
+
+#### 去掉数组中重复的数字
 
 使用原型方法实现数组去重
-Array.prototype.noRepeat = function () {
 
-        //定义一个变量接收新数组
-    
-        var newArr = [];
-    
-        for (var i = 0; i < this.length; i++) {
-    
-            if (newArr.indexOf(this[i]) == -1) {
-    
-                newArr.push(this[i]);//保存
-    
-            }
-    
+```js
+Array.prototype.noRepeat = function () {
+    //定义一个变量接收新数组
+    var newArr = [];
+    for (var i = 0; i < this.length; i++) {
+
+        if (newArr.indexOf(this[i]) == -1) {
+            newArr.push(this[i]);//保存
         }
-    
-        return newArr;
-    
     }
-    
-    var arr = [15, 49, 121, 132, 121, 122, 54, 89, 30, 30, 49, 54];
-    
-    console.log(arr.noRepeat());
+    return newArr;
+}
+var arr = [15, 49, 121, 132, 121, 122, 54, 89, 30, 30, 49, 54];
+console.log(arr.noRepeat());
+```
+#### window属性location的一些常用属性
+
 window.location.search返回的是：该页面地址值中?后面的所有内容
 window.location.hash返回的是：锚点 既#后面的值
-window.location.reload()作用是重新加载该页面；
-阻止冒泡函数：
-什么是闭包，写一个简单的闭包
+window.location.reload()作用是重新加载该页面
+
+#### 什么是闭包，写一个简单的闭包
+
 闭包就是能够读取其他函数内部变量的函数，在本职上，闭包就是将函数内和函数外连接在一起
-function outer(){
-var num = 1;
-function inner(){
-var n = 2;
-alert(n + num);
-}
-return inner;
-}
-outer()();
-/**看代码写结果
-function f1(){
-	var tmp = 1;	
-	this.x = 3;
-	console.log("temp"+tmp); //A
-	console.log("函数内"+this.x); //B
-			}
 
 
+	function outer(){
+	var num = 1;
+	function inner(){
+	var n = 2;
+	alert(n + num);
+	}
+	return inner;
+	}
+	outer()();
+	/**看代码写结果
+	function f1(){
+		var tmp = 1;	
+		this.x = 3;
+		console.log("temp"+tmp); //A
+		console.log("函数内"+this.x); //B
+				}
 
-	var obj = new f1(); //
-	1），这里实例话
-化了f1 这个类。相当于执行了f1 函数。所以这个时候A 会输出1， 而B 这个
+
+​	
+	var obj = new f1(); 
+1），这里实例话化了f1 这个类。相当于执行了f1 函数。所以这个时候A 会输出1， 而B 这个
 时候的this 代表的是实例化的当前对象obj B 输出3.
 	console.log("函数外"+obj.x) //3
 	
+
 	console.log(f1());
 重点代码（3）首先这里将不再是一个类，它只是一个函数。那么A 输出
 1， B 呢？这里的this 代表的其实就是window 对象，那么this.x 就是一个全局变
@@ -5043,7 +5261,7 @@ Animation和transition大部分属性是相同的，他们都是随时间改变�
 （2）src：
 
   			 src是source的缩写，src指向的内容会嵌入到文档当前标签所在位置
-
+  	
   				 如img、script、iframe当浏览器解析到该元素时，会暂停浏览器的渲染，直到该资源加载完毕。
 
 ​		15. 说出link和import的区别？
@@ -5710,4 +5928,160 @@ res.writeHead(200, {
 
  
 
+# 函数内部属性
+
+arguments 引用arguments.length 用来检测调用函数的参数个数
+
+并不会检测调用的参数个数是否等于定义参数的个数
+
+² 检测调用函数的参数个数
+
+² 如果调用函数参数的个数多余定义函数参数个数，用undifined 补充进定义的函数里面，最终按照调用函数参数的个数计算
+
+·this  跟函数在什么地方定义没关系，在哪里调用决定了this 到底引用的是什么，
+
+函数外部使用this，this指代window对象，或者global对象
+
+函数的属性和方法：
+
+两个属性：length，prototype
+
+两个方法：apply() 和call()
+
+Length:当前函数希望接受的命名参数（形参）的个数
+
+Apply()和call()
+
+![image-20220831105606611](images/image-20220831105606611.png) 
+
+基本类型在内存中占有固定大小的空间，比如：数值型在内存中占8个字节，布尔占一个字节
+
+引用类型在内存空间不固定，但内存地址的大小是固定的，因此实际存储的是数据的内存地址
+
+
+
+![image-20220831105823928](images/image-20220831105823928.png) 
+
+
+
+
+
+
+
+![image-20220831105835023](images/image-20220831105835023.png) 
+
+![image-20220831105845830](images/image-20220831105845830.png) 
+
+
+
+在局部变量未写var 则默认他为全局变量 ，拥有全局作用域，window对象的所有属性有全局作用域；在代码的任何地方都可以访问
+
+内部环境可以访问所有的外部环境，但外部环境不能访问内部环境中的任何变量和函数。
+
+访问局部要比访问全局要快 由内向外查找
+
+函数体外访问的是全局变量 
+
+内存的生命周期 内存的分配，内存的使用，内存的回收
+
+² 避免不必要的定义全局变量（当一个变量被定义在全局作用域中，默认情况下 不会将其回收销毁，直到页面被关闭）
+
+² 及时解除不在使用的变量引用，既将其赋值为null（浏览器隔一段时间检查一次） ；
+
+² 合理的使用函数，函数中的局部变量函数执行后就会自动释放内存
+
+·全局函数
+
+
+
+![](images/image-20220831105921116.png) 
+
+
+
+![image-20220831105925368](images/image-20220831105925368.png) 
+
+![image-20220831105930515](images/image-20220831105930515.png) 
+
+![image-20220831105936659](images/image-20220831105936659.png) 
+
+isFinite()检测某个值是否为无穷大的数。
+
+Infinity无穷大   - Infinity无穷小
+
  
+
+![image-20220831105948018](images/image-20220831105948018.png) 
+
+![image-20220831105954296](images/image-20220831105954296.png) 
+
+![image-20220831110001087](images/image-20220831110001087.png) 
+
+1.删除确认提示框
+
+Confirm（）；当用户点击确认按钮是会返回true当点击取消时会返回false
+
+包含一个if判断语句的函数
+
+2.动态创建元素
+
+3.动态添加事件
+
+\4. 防止按钮连击 
+
+![image-20220831110011496](images/image-20220831110011496.png) 
+
+![image-20220831110016281](images/image-20220831110016281.png) 
+
+![image-20220831110026457](images/image-20220831110026457.png) 
+
+![image-20220831110034317](images/image-20220831110034317.png) 
+
+![image-20220831110046668](images/image-20220831110046668.png) 
+
+![image-20220831110051924](images/image-20220831110051924.png) 
+
+![image-20220831110057030](images/image-20220831110057030.png) 
+
+![image-20220831110101950](images/image-20220831110101950.png)
+
+![image-20220831110108173](images/image-20220831110108173.png) 
+
+![image-20220831110112555](images/image-20220831110112555.png) 
+
+继承
+
+![image-20220831110123637](images/image-20220831110123637.png) 
+
+![image-20220831110128792](images/image-20220831110128792.png) 
+
+![image-20220831110134671](images/image-20220831110134671.png) 
+
+![image-20220831110139374](images/image-20220831110139374.png) 
+
+![image-20220831110144776](images/image-20220831110144776.png) 
+
+![image-20220831110148026](images/image-20220831110148026.png) 
+
+![image-20220831110153588](images/image-20220831110153588.png) 
+
+![image-20220831110159625](images/image-20220831110159625.png) 
+
+![image-20220831110202970](images/image-20220831110202970.png) 
+
+![image-20220831110206585](images/image-20220831110206585.png) 
+
+![image-20220831110210935](images/image-20220831110210935.png) 
+
+Ajax
+
+![image-20220831110215068](images/image-20220831110215068.png)
+
+![image-20220831110232661](images/image-20220831110232661.png) 
+
+![image-20220831110237061](images/image-20220831110237061.png) 
+
+![image-20220831110240765](images/image-20220831110240765.png) 
+
+![image-20220831110247156](images/image-20220831110247156.png)
+
+![image-20220831110251358](images/image-20220831110251358.png) 
